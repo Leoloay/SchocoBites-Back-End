@@ -14,20 +14,20 @@ class UserSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('name', 'description', 'price', 'category', 'image')
+        fields = ('id', 'name', 'description', 'price', 'category', 'image')
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('user', 'status', 'payment_status', 'address', 'phone','total_Price', 'special_instruction')
+        fields = ('id', 'user', 'status', 'payment_status', 'address', 'phone','total_Price', 'special_instruction')
     
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('user', 'product', 'rating', 'review')
+        fields = ('id', 'user', 'product', 'rating', 'review')
         
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ('product', 'quantity', 'order', 'price_at_order')
+        fields = ('id', 'product', 'quantity', 'order', 'price_at_order')

@@ -36,7 +36,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('main_app.urls')),
-    path('login/', UserLoginView.as_view(), name='token_obtain_pair'),
+    path('api/login/', UserLoginView.as_view(), name='token_obtain_pair'),
     path('refresh/', TokenRefresh.as_view(), name='token_refresh'),
     path('logout/', logout_view, name='logout'),
 ]

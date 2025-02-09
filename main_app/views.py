@@ -30,6 +30,7 @@ class CreateUserView(generics.CreateAPIView):
             'access': str(refresh.access_token),
         }
         return response
+
 class ProductView(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
