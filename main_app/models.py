@@ -29,8 +29,8 @@ class Review(models.Model):
     
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
-    status = models.CharField(max_length=100,choices=[ ('Pending','Pending'),('In-Process','In-Process') ,('Shipped', 'Shipped') ,('Delivered','Delivered')
-        ] ,default='Pending')
+    status = models.CharField(max_length=100,choices=[ ('In-Cart','In-Cart'),('Pending','Pending'),('In-Process','In-Process') ,('Shipped', 'Shipped') ,('Delivered','Delivered')
+        ] ,default='In-Cart')
     payment_status = models.CharField(max_length=20, choices=[
         ('unpaid', 'Unpaid'),
         ('paid', 'Paid'),

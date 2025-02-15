@@ -47,10 +47,11 @@ class OrderView(viewsets.ModelViewSet):
 
 class ReviewView(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
-        return Review.objects.all()
+        product = self.request.query_params.get('product')
+        return Review.objects.filter(product_id=product)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
