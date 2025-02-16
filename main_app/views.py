@@ -16,6 +16,20 @@ from rest_framework_simplejwt.authentication import JWTAuthentication, JWTTokenU
 
 # Create your views here.
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        if self.request.user.is_staff: 
+            return User.objects.all()
+        return User.objects.filter(id=self.request.user.id)  
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -52,9 +66,11 @@ class ReviewView(viewsets.ModelViewSet):
     def get_queryset(self):
         product = self.request.query_params.get('product')
         return Review.objects.filter(product_id=product)
+        # return Review.objects.all()
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     print("user", self.request.user)
+    #     serializer.save(user_id=self.request.user.id)
 
 # def home(request):
 #     # Send a simple HTML response
@@ -93,4 +109,6 @@ def logout_view(request):
         return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": "Invalid token or token expired"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 

@@ -27,6 +27,7 @@ router = routers.DefaultRouter()
 router.register(r'products', views.ProductView, 'Product')
 router.register(r'orders', views.OrderView, 'Order')
 router.register(r'reviews', views.ReviewView, 'Review')
+router.register(r'users', views.UserViewSet, 'user')
 
 
 urlpatterns = [
