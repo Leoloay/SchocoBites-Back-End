@@ -13,13 +13,15 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.authentication import JWTAuthentication, JWTTokenUserAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 # Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         if self.request.user.is_staff: 
@@ -62,11 +64,13 @@ class OrderView(viewsets.ModelViewSet):
 class ReviewView(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = [AllowAny]
+    lookup_field = 'id'
 
     def get_queryset(self):
         product = self.request.query_params.get('product')
-        return Review.objects.filter(product_id=product)
-        # return Review.objects.all()
+        if product:
+            return Review.objects.filter(product_id=product)
+        return Review.objects.all()
 
     # def perform_create(self, serializer):
     #     print("user", self.request.user)
