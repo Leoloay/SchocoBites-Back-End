@@ -134,6 +134,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
+    "http://localhost:5173",
 ]
 
 REST_FRAMEWORK = {

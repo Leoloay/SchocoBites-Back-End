@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import ProductSerializer , OrderSerializer, ReviewSerializer, UserSerializer
-from .models import Product , Order, Review
+from .serializers import ProductSerializer , OrderSerializer, ReviewSerializer, UserSerializer, OrderItemSerializer
+from .models import Product , Order, Review, OrderItem
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -31,6 +31,18 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
+
+class OrderItemView(viewsets.ModelViewSet):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    lookup_field = 'id'
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        order = self.request.query_params.get('order')
+        if order:
+            return OrderItem.objects.filter(order_id=order)
+        return OrderItem.objects.all()
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
