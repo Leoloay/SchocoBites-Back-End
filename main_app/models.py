@@ -39,7 +39,7 @@ class Order(models.Model):
     address = models.TextField()
     phone = models.CharField(max_length=100)
     total_Price = models.DecimalField(max_digits=10, decimal_places=2)
-    special_instruction = models.TextField()
+    special_instruction = models.TextField(default="Nothing", blank=True, null=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     
